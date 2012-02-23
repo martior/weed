@@ -1,4 +1,6 @@
 Weed::Application.routes.draw do
+  get "home/callback"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +50,9 @@ Weed::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
+  match 'callback/' => 'home#callback'
   root :to => 'home#index'
+
 
   # See how all your routes lay out with "rake routes"
 

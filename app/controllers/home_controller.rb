@@ -12,6 +12,7 @@ class HomeController < ApplicationController
   end
   
   def callback
-    @access_token=@request_token.get_access_token
+    print "callback"
   end
+
 end
