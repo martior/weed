@@ -10,10 +10,25 @@ module OauthTwitter
 
   def get_access_token
     return OAuth::AccessToken.new(get_consumer, session[:access_token], session[:access_token_secret])
+	rescue => err
+		puts "Exception when getting access token: #{err}"
+		raise err
+
   end
   
   def verify_credentials
-    return ActiveSupport::JSON.decode(get_access_token.get("https://api.twitter.com/1/account/verify_credentials.json").body)
+		response = get_access_token.get('/account/verify_credentials.json')
+		case response
+		when Net::HTTPSuccess
+			twitter_user=JSON.parse(response.body)
+			raise "Twitter user is not a hash"  unless twitter_user.is_a? Hash
+      return twitter_user
+		else
+			raise "Error with http request"
+		end
+	rescue => err
+		puts "Exception in verify_credentials: #{err}"
+    login
   end
 
   def login
