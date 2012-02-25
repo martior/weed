@@ -1,14 +1,48 @@
+
+
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Weed</title>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+   <title>Weed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A tool to mass unfollo people on Twitter.">
+    <meta name="author" content="Martin Reistadbakk">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
   <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-</head>
-<body>
 
-<%= yield %>
+  </head>
 
-</body>
+  <body>
+
+    <div class="container">
+
+		  <%= yield %>
+
+      <hr>
+
+      <footer>
+        <p>&copy; <a href="http://twitter.com/martior">Martin Reistadbakk</a> 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.2.2/underscore-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js"></script>
+	<%= javascript_include_tag "application" %>
+
+  </body>
 </html>

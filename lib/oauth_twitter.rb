@@ -27,8 +27,8 @@ module OauthTwitter
 			raise "Error with http request"
 		end
 	rescue => err
-		puts "Exception in verify_credentials: #{err}"
-    login
+		puts "User not logged in: #{err}"
+    return nil
   end
 
   def login

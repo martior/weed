@@ -5,6 +5,9 @@ class HomeController < ApplicationController
 
   def index
     @twitter_user = verify_credentials
+    if @twitter_user.nil?
+        render :template => 'home/welcome'
+    end
   end
 
 end
