@@ -7,7 +7,7 @@ module OauthTwitter
         })
   end
 
-
+  
   def get_access_token
     return OAuth::AccessToken.new(get_consumer, session[:access_token], session[:access_token_secret])
 	rescue => err
@@ -21,7 +21,7 @@ module OauthTwitter
 		when Net::HTTPSuccess
 			twitter_user=JSON.parse(response.body)
 			raise "Twitter user is not a hash"  unless twitter_user.is_a? Hash
-      return twitter_user
+			return twitter_user
 		else
 			raise "Error with http request"
 		end
@@ -30,11 +30,11 @@ module OauthTwitter
     return nil
   end
 
-
+  
   def get_friends
     # have to have the full URL of api.twitter.com here to force https.
-		response = get_access_token.get('https://api.twitter.com/1/friends/ids.json?cursor=-1')
-		case response
+    response = get_access_token.get('https://api.twitter.com/1/friends/ids.json?cursor=-1')
+    case response
 		when Net::HTTPSuccess
 			friends=JSON.parse(response.body)
 			raise "Twitter user is not a hash"  unless friends.is_a? Hash
@@ -47,7 +47,7 @@ module OauthTwitter
     return nil
   end
 
-
+  
   def get_friends_details_from_server(ids)
     friend_ids = ids.join ","
     # have to have the full URL of api.twitter.com here to force https.
@@ -65,8 +65,8 @@ module OauthTwitter
 		  puts "User not logged in: #{err}"
       return nil
   end
-  
 
+  
   def get_friends_details(ids=get_friends)
     friends = Array.new
     friends_not_cached = Array.new
@@ -90,7 +90,7 @@ module OauthTwitter
     end
     return friends
   end
-
+  
   def destroy_friendship(id)
 		response = get_access_token.post('https://api.twitter.com/1/friendships/destroy.json',{"user_id"=>id})
     Rails.cache.delete(id)
@@ -104,11 +104,11 @@ module OauthTwitter
   rescue => err
 		  puts "Error deleting user: #{err}"
       return false
-
-  end
   
+  end
 
 
+  
   def logout
     session[:request_token] = nil
     session[:request_token_secret] = nil
@@ -116,23 +116,23 @@ module OauthTwitter
     session[:access_token_secret] = nil
     redirect_to :action => :index
   end
-
+  
   def login
     request_token=get_consumer.get_request_token( :oauth_callback => TWOAUTH_CALLBACK )
     session[:request_token] = request_token.token
     session[:request_token_secret] = request_token.secret
     redirect_to request_token.authorize_url
-    
+  
   end
-
+  
   
   def callback
     request_token = OAuth::RequestToken.new(get_consumer,  params[:oauth_token], session[:request_token_secret])
     access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier] )
     session[:access_token] = access_token.token
-    session[:access_token_secret] = access_token.secret    
+    session[:access_token_secret] = access_token.secret
     redirect_to :action => :index
   end
-
   
+
 end
