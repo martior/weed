@@ -7,6 +7,8 @@ class HomeController < ApplicationController
     @twitter_user = verify_credentials
     if @twitter_user.nil?
         render :template => 'home/welcome'
+    else
+      @friends = get_friends
     end
   end
 

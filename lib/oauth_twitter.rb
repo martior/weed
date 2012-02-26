@@ -31,6 +31,29 @@ module OauthTwitter
     return nil
   end
 
+
+  def get_friends
+    # have to have the full URL of api.twitter.com here to force https.
+		response = get_access_token.get('https://api.twitter.com/1/friends/ids.json?cursor=-1')
+		case response
+		when Net::HTTPSuccess
+			friends=JSON.parse(response.body)
+			raise "Twitter user is not a hash"  unless friends.is_a? Hash
+      friends_array = Array.new(friends["ids"].size)
+
+      friends["ids"].each_with_index {|friend,i|
+        friends_array[i]={"id"=> friend, "screen_name"=> "fetching..."}
+      }
+      return friends_array
+		else
+			raise "Error with http request"
+		end
+	rescue => err
+		puts "User not logged in: #{err}"
+    return nil
+  end
+
+
   def login
     request_token=get_consumer.get_request_token( :oauth_callback => TWOAUTH_CALLBACK )
     session[:request_token] = request_token.token
