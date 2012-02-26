@@ -13,7 +13,6 @@ module OauthTwitter
 	rescue => err
 		puts "Exception when getting access token: #{err}"
 		raise err
-
   end
   
   def verify_credentials
@@ -67,22 +66,6 @@ module OauthTwitter
       return nil
   end
   
-  def destroy_friendship(id)
-		response = get_access_token.post('https://api.twitter.com/1/friendships/destroy.json',{"user_id"=>id})
-    Rails.cache.delete(id)
-		case response
-		when Net::HTTPSuccess
-      return true
-		else
-      puts response.inspect
-			raise "Error with http request"
-		end
-  rescue => err
-		  puts "Error deleting user: #{err}"
-      return false
-
-  end
-  
 
   def get_friends_details(ids=get_friends)
     friends = Array.new
@@ -108,7 +91,31 @@ module OauthTwitter
     return friends
   end
 
+  def destroy_friendship(id)
+		response = get_access_token.post('https://api.twitter.com/1/friendships/destroy.json',{"user_id"=>id})
+    Rails.cache.delete(id)
+		case response
+		when Net::HTTPSuccess
+      return true
+		else
+      puts response.inspect
+			raise "Error with http request"
+		end
+  rescue => err
+		  puts "Error deleting user: #{err}"
+      return false
 
+  end
+  
+
+
+  def logout
+    session[:request_token] = nil
+    session[:request_token_secret] = nil
+    session[:access_token] = nil
+    session[:access_token_secret] = nil
+    redirect_to :action => :index
+  end
 
   def login
     request_token=get_consumer.get_request_token( :oauth_callback => TWOAUTH_CALLBACK )
