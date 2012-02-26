@@ -39,12 +39,7 @@ module OauthTwitter
 		when Net::HTTPSuccess
 			friends=JSON.parse(response.body)
 			raise "Twitter user is not a hash"  unless friends.is_a? Hash
-      friends_array = Array.new(friends["ids"].size)
-
-      friends["ids"].each_with_index {|friend,i|
-        friends_array[i]={"id"=> friend, "screen_name"=> "fetching..."}
-      }
-      return friends_array
+      return friends["ids"]
 		else
 			raise "Error with http request"
 		end
@@ -52,6 +47,68 @@ module OauthTwitter
 		puts "User not logged in: #{err}"
     return nil
   end
+
+
+  def get_friends_details_from_server(ids)
+    friend_ids = ids.join ","
+    # have to have the full URL of api.twitter.com here to force https.
+		response = get_access_token.get('https://api.twitter.com/1/users/lookup.json?user_id='<<friend_ids)
+		case response
+		when Net::HTTPSuccess
+			friends=JSON.parse(response.body)
+			raise "Twitter user details is not an array"  unless friends.is_a? Array
+      return friends
+		else
+      puts response.inspect
+			raise "Error with http request"
+		end
+    rescue => err
+		  puts "User not logged in: #{err}"
+      return nil
+  end
+  
+    def destroy_friendship(id)
+  		response = get_access_token.get('https://api.twitter.com/1/friendships/destroy.json?user_id='<<friend_ids)
+  		case response
+  		when Net::HTTPSuccess
+  			friends=JSON.parse(response.body)
+  			raise "Twitter user is not a hash"  unless friends.is_a? Array
+        return friends
+  		else
+        puts response.inspect
+  			raise "Error with http request"
+  		end
+      rescue => err
+  		  puts "User not logged in: #{err}"
+        return nil
+
+    end
+  
+
+  def get_friends_details(ids=get_friends)
+    friends = Array.new
+    friends_not_cached = Array.new
+    ids.each do|id|
+        friend_details = Rails.cache.read(id.to_s)
+        unless friend_details.nil?
+          friends << friend_details
+        else
+          friends_not_cached << id
+        end
+    end
+    wanted_keys = %w[id screen_name profile_image_url name]
+    if friends_not_cached.size > 0
+      (0..friends_not_cached.size/100).each do|page|
+        get_friends_details_from_server(friends_not_cached[100*page,100]).each do|friend_details|
+          friend_details = friend_details.reject { |key,_| !wanted_keys.include? key }
+          friends << friend_details
+          Rails.cache.write(friend_details["id"].to_s,friend_details)
+        end
+      end
+    end
+    return friends
+  end
+
 
 
   def login

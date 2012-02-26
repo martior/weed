@@ -8,7 +8,8 @@ class HomeController < ApplicationController
     if @twitter_user.nil?
         render :template => 'home/welcome'
     else
-      @friends = get_friends
+      
+      @friends = get_friends_details
     end
   end
 
