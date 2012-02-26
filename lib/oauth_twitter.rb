@@ -67,22 +67,21 @@ module OauthTwitter
       return nil
   end
   
-    def destroy_friendship(id)
-  		response = get_access_token.get('https://api.twitter.com/1/friendships/destroy.json?user_id='<<friend_ids)
-  		case response
-  		when Net::HTTPSuccess
-  			friends=JSON.parse(response.body)
-  			raise "Twitter user is not a hash"  unless friends.is_a? Array
-        return friends
-  		else
-        puts response.inspect
-  			raise "Error with http request"
-  		end
-      rescue => err
-  		  puts "User not logged in: #{err}"
-        return nil
+  def destroy_friendship(id)
+		response = get_access_token.post('https://api.twitter.com/1/friendships/destroy.json',{"user_id"=>id})
+    Rails.cache.delete(id)
+		case response
+		when Net::HTTPSuccess
+      return true
+		else
+      puts response.inspect
+			raise "Error with http request"
+		end
+  rescue => err
+		  puts "Error deleting user: #{err}"
+      return false
 
-    end
+  end
   
 
   def get_friends_details(ids=get_friends)
