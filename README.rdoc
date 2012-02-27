@@ -6,6 +6,7 @@ Weed.tw does not have a database and will not store any personal information. Al
 
 Weed.tw is a web-application written in Ruby on Rails with backbone.js. 
 
+Try it out on http://weed.tw
 
 == Getting Started
 
@@ -16,7 +17,7 @@ Weed.tw is a web-application written in Ruby on Rails with backbone.js.
   export TWOAUTH_KEY=<KEY>
   export TWOAUTH_SECRET=<SECRET>
 
-3. Start rails with rais s
+3. Start rails with rails s
 
-4. Go to http://locahost:3000 in your web-browser.
+4. Go to http://localhost:3000 in your web-browser.
 
