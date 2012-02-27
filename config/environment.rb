@@ -14,4 +14,4 @@ TWOAUTH_KEY = ENV['TWOAUTH_KEY']
 # Twitter OAuth Consumer secret
 TWOAUTH_SECRET = ENV['TWOAUTH_SECRET']
 
-WANTED_KEYS = %w[id screen_name name]
+WANTED_KEYS = %w[id screen_name name following]

@@ -5,6 +5,7 @@ class Weed.Models.NewFriend extends Backbone.Model
     id: null
     name: null
     screen_name: null
+	following: null
 
 class Weed.Collections.NewFriendsCollection extends Backbone.Collection
   model: Weed.Models.NewFriend

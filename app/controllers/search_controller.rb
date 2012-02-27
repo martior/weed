@@ -9,7 +9,5 @@ class SearchController < ApplicationController
     end
     @q = params[:q]
     @new_friends = search_users(URI.escape(@q))
-    puts "search controller"
-    puts @new_friends.inspect
   end
 end
