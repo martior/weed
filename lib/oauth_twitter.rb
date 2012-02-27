@@ -104,7 +104,7 @@ module OauthTwitter
   
   end
 
-  def search_users(q)
+  def search_users(q,page=1)
     # have to have the full URL of api.twitter.com here to force https.
     response = get_access_token.get('https://api.twitter.com/1/users/search.json?q='<<q)
     return_users = Array.new
