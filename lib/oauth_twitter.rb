@@ -58,7 +58,6 @@ module OauthTwitter
 			raise "Twitter user details is not an array"  unless friends.is_a? Array
       return friends
 		else
-      puts response.inspect
 			raise "Error with http request"
 		end
     rescue => err
@@ -78,11 +77,10 @@ module OauthTwitter
           friends_not_cached << id
         end
     end
-    wanted_keys = %w[id screen_name profile_image_url name]
     if friends_not_cached.size > 0
       (0..friends_not_cached.size/100).each do|page|
         get_friends_details_from_server(friends_not_cached[100*page,100]).each do|friend_details|
-          friend_details = friend_details.reject { |key,_| !wanted_keys.include? key }
+          friend_details = friend_details.reject { |key,_| !WANTED_KEYS.include? key }
           friends << friend_details
           Rails.cache.write(friend_details["id"].to_s,friend_details)
         end
@@ -98,7 +96,6 @@ module OauthTwitter
 		when Net::HTTPSuccess
       return true
 		else
-      puts response.inspect
 			raise "Error with http request"
 		end
   rescue => err
@@ -107,6 +104,26 @@ module OauthTwitter
   
   end
 
+  def search_users(q)
+    # have to have the full URL of api.twitter.com here to force https.
+    response = get_access_token.get('https://api.twitter.com/1/users/search.json?q='<<q)
+    return_users = Array.new
+    case response
+		when Net::HTTPSuccess
+			users=JSON.parse(response.body)
+			raise "Twitter user is not a hash"  unless users.is_a? Array
+      users.each do|user_details|
+        user_details = user_details.reject { |key,_| !WANTED_KEYS.include? key }
+        return_users << user_details
+      end
+      return return_users
+		else
+			raise "Error with http request"
+		end
+	rescue => err
+		puts "User not logged in: #{err}"
+    return nil
+  end
 
   
   def logout
