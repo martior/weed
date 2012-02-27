@@ -41,7 +41,7 @@
 
 <script type="text/javascript">
   $(function() {
-    window.router = new Weed.Routers.NewFriendsRouter({new_friends: <%= @new_friends.to_json.html_safe -%>});
+    window.router = new Weed.Routers.NewFriendsRouter({newFriends: <%= @new_friends.to_json.html_safe -%>});
     Backbone.history.start();
   });
 </script>
