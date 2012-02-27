@@ -127,10 +127,7 @@ module OauthTwitter
 
   
   def logout
-    session[:request_token] = nil
-    session[:request_token_secret] = nil
-    session[:access_token] = nil
-    session[:access_token_secret] = nil
+    reset_session
     redirect_to :action => :index
   end
   
