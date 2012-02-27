@@ -1,7 +1,7 @@
 Weed::Application.routes.draw do
-  match 'login/' => 'home#login'
-  match 'callback/' => 'home#callback'
-  match 'logout/' => 'home#logout'
+  match 'login/' => 'application#login'
+  match 'callback/' => 'application#callback'
+  match 'logout/' => 'application#logout'
   resources :friends
-  root :to => 'home#index'
+  root :to => 'application#index'
 end
