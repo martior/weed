@@ -33,3 +33,7 @@ Todo
 * Add feedback when unfollowing users, restore model if unsuccessfull
 
 * Add popower with more info about users when clicking on them
+
+* Refactor pagination code to be less of a gigantic mess
+
+* Store max-pages for search result in session? back button can now make the number of pages go down

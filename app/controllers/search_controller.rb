@@ -18,23 +18,23 @@ class SearchController < ApplicationController
       @q = params[:q] 
       @page = params[:page]
       if @page.nil?
-        @page = 0
+        @page = 1
       else
         @page = @page.to_i
       end
       @page_max = params[:page_max]
       if @page_max.nil?
-          @page_max = 0
+          @page_max = 1
       else
         @page_max= @page_max.to_i
       end
       if @page > @page_max
         @page_max = @page
       end
-      if @page > 0
+      if @page > 1
         @previous = @page -1
       else
-        @previous = 0
+        @previous = 1
       end
       if @page < @page_max
         @next = @page  + 1
