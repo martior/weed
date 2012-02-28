@@ -28,26 +28,27 @@
   </div>
 </div>
 
+  <% if flash[:notice] %>
+   <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% end %>
 
 <div class="row">
 <div class="span12">
+  <%= form_tag do %>
 	  <table>
 		  <th><td></td>
 		  </th>
-		  <% @new_friends.each do |new_friend| %>
+		    <% @new_friends.each do |new_friend| %>
 		   	<tr><td>
-				<label class="checkbox">
-					<h4><input type="checkbox" class="inline" name="unfollow" <% if new_friend["following"] %>disabled<% end %> value="<%= new_friend["id"] %>">
-					<%= new_friend["screen_name"] %> <small>@<%= new_friend["screen_name"] %></small> <% if new_friend["following"] %><span class="label label-info">following</span><% end %></h4>
-				</label>
-			</td></tr>
-		<% end %>
-   </table>
-		
-	  
-	  
-   <a class="btn btn-success destroy_selected">Follow selected users</a>
-
+				  <label class="checkbox">
+					  <h4><input type="checkbox" class="inline" name="follow[]" <% if new_friend["following"] %>disabled<% end %> value="<%= new_friend["id"] %>">
+					    <%= new_friend["screen_name"] %> <small>@<%= new_friend["screen_name"] %></small> <% if new_friend["following"] %><span class="label label-info">following</span><% end %></h4>
+				  </label>
+			  </td></tr>
+ 	      <% end %>
+    </table> 
+      <button type="submit" class="btn btn-success">Follow selected users</button>
+  <% end %>
   <div class="pagination">
     <ul>
       <li><a href="?q=<%= @q %>&page=<%= @previous %>&page_max=<%= @page_max %>">Prev</a></li>
