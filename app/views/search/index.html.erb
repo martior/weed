@@ -53,7 +53,7 @@
   <div class="pagination">
     <ul>
       <li><a href="?q=<%= @q %>&page=<%= @previous %>&page_max=<%= @page_max %>">Prev</a></li>
-  	<% (0..@page_max).each do |i| %>
+  	<% (1..@page_max).each do |i| %>
   	  <li <% if @page==i %><%= "class='active'" %><% end %>><a href="?q=<%= @q %>&page=<%= i %>&page_max=<%= @page_max %>"><%= i %></a></li>
   	<% end %>
 
