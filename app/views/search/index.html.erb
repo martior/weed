@@ -43,7 +43,7 @@
 		   	<tr><td>
 				  <label class="checkbox">
 					  <h4><input type="checkbox" class="inline" name="follow[]" <% if new_friend["following"] %>disabled<% end %> value="<%= new_friend["id"] %>">
-					    <%= new_friend["screen_name"] %> <small>@<%= new_friend["screen_name"] %></small> <% if new_friend["following"] %><span class="label label-info">following</span><% end %></h4>
+					    <%= new_friend["name"] %> <small>@<%= new_friend["screen_name"] %></small> <% if new_friend["following"] %><span class="label label-info">following</span><% end %></h4>
 				  </label>
 			  </td></tr>
  	      <% end %>
