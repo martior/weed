@@ -1,4 +1,5 @@
-== Weed.tw
+Weed.tw
+=======
 
 Weed.tw is a tool to weed out the weeds from your twitter timeline. Weed.tw allows you to unfollow in bulk. If your timeline is getting out of hand this tool is for you. When you are done weeding, weed.tw has a built in search to help you find new people to follow.
 
@@ -8,18 +9,20 @@ Weed.tw is a web-application written in Ruby on Rails with backbone.js.
 
 Try it out on http://weed.tw
 
-== Getting Started
+Getting Started
+---------------
 
 1. Register a new application on http://dev.twitter.com
 2. Add the following to your ~/.profile (remember to source it after adding it) or just run in terminal before you start rails:
-  export TWOAUTH_CALLBACK=http://localhost:3000/callback
-  export TWOAUTH_KEY=<KEY>
-  export TWOAUTH_SECRET=<SECRET>
+    export TWOAUTH_CALLBACK=http://localhost:3000/callback
+    export TWOAUTH_KEY=<KEY>
+    export TWOAUTH_SECRET=<SECRET>
 3. Start rails with rails s
 4. Go to http://localhost:3000 in your web-browser
 
 
-== Todo
+Todo
+----
 
 * Add more checks and allerts for all functions in oauth_twitter.rb
 
