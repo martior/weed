@@ -26,6 +26,10 @@ Getting Started
 Todo
 ----
 
+* Do crossbrowser testing!!!! so far only tested Safari
+
 * Add more checks and allerts for all functions in oauth_twitter.rb
 
 * Add feedback when unfollowing users, restore model if unsuccessfull
+
+* Add popower with more info about users when clicking on them
