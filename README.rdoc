@@ -19,5 +19,11 @@ Try it out on http://weed.tw
 
 3. Start rails with rails s
 
-4. Go to http://localhost:3000 in your web-browser.
+4. Go to http://localhost:3000 in your web-browser
 
+
+== Todo
+
+* Add more checks and allerts for all functions in oauth_twitter.rb
+
+* Add feedback when unfollowing users, restore model if unsuccessfull
