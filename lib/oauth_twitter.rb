@@ -104,10 +104,23 @@ module OauthTwitter
   
   end
 
+  def create_friendship(id)
+		response = get_access_token.post('https://api.twitter.com/1/friendships/create.json',{"user_id"=>id})
+		case response
+		when Net::HTTPSuccess
+      return true
+		else
+			raise "Error with http request"
+		end
+  rescue => err
+		  puts "Error deleting user: #{err}"
+      return false
+  
+  end
+
+
   def search_users(q,page=0)
     # have to have the full URL of api.twitter.com here to force https.
-    puts page
-    puts 'https://api.twitter.com/1/users/search.json?q='<<q<<"&page="<<page.to_s
     response = get_access_token.get('https://api.twitter.com/1/users/search.json?q='<<q<<"&page="<<page.to_s)
     return_users = Array.new
     case response
@@ -118,16 +131,12 @@ module OauthTwitter
         user_details = user_details.reject { |key,_| !WANTED_KEYS.include? key }
         return_users << user_details
       end
-      #return up to 100 search results
-      if users.size >= 20 and page < 5
-        return_users = return_users | search_users(q,page+1)
-      end
       return return_users
 		else
 			raise "Error with http request"
 		end
 	rescue => err
-		puts "User not logged in: #{err}"
+		puts "Most likely rate limit exceeded. Wait an hour and try again: #{err}"
     return nil
   end
 

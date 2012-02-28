@@ -4,4 +4,12 @@
   </tr>
 </table>
 <a class="btn btn-primary destroy_selected">Follow selected users</a>
-
+<div class="pagination">
+  <ul>
+    <li><a href="#/page/<%= previous %>">Prev</a></li>
+	<% for(var i=1; i<=pages; i++) {%>
+	  <li <% if (page==i){ %><%= "class='active'" %><% } %>><a href="#/page/<%= i %>"><%= i %></a></li>
+	<% } %>
+    <li><a href="#/page/<%= next %>">Next</a></li>
+  </ul>
+</div>

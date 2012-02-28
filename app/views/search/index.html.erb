@@ -30,18 +30,41 @@
 
 
 <div class="row">
-  <div class="span12">
-	<div id="new_friends"></div>
+<div class="span12">
+	  <table>
+		  <th><td></td>
+		  </th>
+		  <% @new_friends.each do |new_friend| %>
+		   	<tr><td>
+				<label class="checkbox">
+					<h4><input type="checkbox" class="inline" name="unfollow" <% if new_friend["following"] %>disabled<% end %> value="<%= new_friend["id"] %>">
+					<%= new_friend["screen_name"] %> <small>@<%= new_friend["screen_name"] %></small> <% if new_friend["following"] %><span class="label label-info">following</span><% end %></h4>
+				</label>
+			</td></tr>
+		<% end %>
+   </table>
+		
+	  
+	  
+   <a class="btn btn-success destroy_selected">Follow selected users</a>
+
+  <div class="pagination">
+    <ul>
+      <li><a href="?q=<%= @q %>&page=<%= @previous %>&page_max=<%= @page_max %>">Prev</a></li>
+  	<% (0..@page_max).each do |i| %>
+  	  <li <% if @page==i %><%= "class='active'" %><% end %>><a href="?search?q=<%= @q %>&page=<%= @page %>&page_max=<%= @page_max %>"><%= i %></a></li>
+  	<% end %>
+
+      <li>
+        <% if @more %>
+          <a href="?q=<%= @q %>&page=<%= @page_max+1 %>&page_max=<%= @page_max %>">...</a>
+        <% end %>
+        <a href="?q=<%= @q %>&page=<%= @next %>&page_max=<%= @page_max %>">Next</a>
+
+      </li>
+    </ul>
+  </div>
+
+
   </div>
 </div>
-
-
-
-
-
-<script type="text/javascript">
-  $(function() {
-    window.router = new Weed.Routers.NewFriendsRouter({newFriends: <%= @new_friends.to_json.html_safe -%>});
-    Backbone.history.start();
-  });
-</script>

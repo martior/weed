@@ -9,4 +9,4 @@ class Weed.Models.NewFriend extends Backbone.Model
 
 class Weed.Collections.NewFriendsCollection extends Backbone.Collection
   model: Weed.Models.NewFriend
-  url: '/new_friends'
+  #url: '/new_friends'

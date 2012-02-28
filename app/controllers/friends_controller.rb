@@ -15,5 +15,9 @@ class FriendsController < ApplicationController
     render :json => destroy_friendship(params[:id])
   end
   
+  def create
+    render :json => create_friendship(params[:id])
+  end
+  
   
 end
