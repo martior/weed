@@ -15,9 +15,9 @@ Getting Started
 1. Register a new application on http://dev.twitter.com
 2. Add the following to your ~/.profile (remember to source it after adding it) or just run in terminal before you start rails:
 
-    export TWOAUTH_CALLBACK=http://localhost:3000/callback
+    <pre>export TWOAUTH_CALLBACK=http://localhost:3000/callback
     export TWOAUTH_KEY=<KEY>
-    export TWOAUTH_SECRET=<SECRET>
+    export TWOAUTH_SECRET=<SECRET></pre>
 
 3. Start rails with rails s
 4. Go to http://localhost:3000 in your web-browser
