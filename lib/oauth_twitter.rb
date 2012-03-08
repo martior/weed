@@ -31,6 +31,27 @@ module OauthTwitter
   end
 
   
+  def get_timeline(page=1,max_page=1)
+    # have to have the full URL of api.twitter.com here to force https.
+    response = get_access_token.get('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&page='<<page.to_s)
+    case response
+		when Net::HTTPSuccess
+      timeline=JSON.parse(response.body)
+      raise "Twitter timeline is not a array"  unless timeline.is_a? Array
+      if (page<max_page)
+        return timeline + get_timeline(page+1,max_page)
+      else
+        return timeline
+      end
+		else
+			raise "Error with http request"
+		end
+	rescue => err
+		puts "User not logged in: #{err}"
+    return nil
+  end
+  
+  
   def get_friends
     # have to have the full URL of api.twitter.com here to force https.
     response = get_access_token.get('https://api.twitter.com/1/friends/ids.json?cursor=-1')

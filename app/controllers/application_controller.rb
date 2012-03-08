@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
       render :template => 'application/welcome'
     else
       @friends = get_friends_details
+      puts @friends
+      puts get_timeline(page=1,max_page=4).inspect
     end
   end
   
